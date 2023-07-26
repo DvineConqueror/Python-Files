@@ -1,5 +1,26 @@
 import random
 
+#Game Interface
+def menu():
+    print("Welcome to the game of Tic Tac Toe")
+    print("Please select an option: ")
+    print("     1. Player vs Player     ")
+    print("     2. Player vs Bot        ")
+    print("          3. Exit            ")
+
+
+def selectOption():
+    while True:
+        option = input("Enter your choice: ")
+        if option == 1:
+            return "human_vs_human"
+        elif option == 2:
+            return "human_vs_bot"
+        elif option == 3:
+            return "exit"
+        else:
+            print("Invalid Choice! Please try again.")
+
 # set variables
 board = [" - ", " - ", " - ",
          " - ", " - ", " - ",
