@@ -29,13 +29,15 @@ while True:
                 kg = int(input("Enter your Weight (Kg): "))
                 meter = float(input("Enter your Height (Meters): "))
                 bmi = kg / meter ** 2
-                print(f"Body Mass Index: {bmi}")
+                rounded_bmi = round(bmi, 2)
+                print(f"Body Mass Index: {rounded_bmi}")
                 print(f"BMI Weight Class: {weightClass(bmi)}")
             case 2:
                 kg = int(input("Enter your Weight (Kg): "))
                 cMeter = float(input("Enter your Height (Centimeter): "))
                 bmi = (kg / (cMeter / 100) ** 2)
-                print(f"Body Mass Index: {bmi}")
+                rounded_bmi = round(bmi, 2)
+                print(f"Body Mass Index: {rounded_bmi}")
                 print(f"BMI Weight Class: {weightClass(bmi)}")
             case 3:
                 lb = float(input("Enter your Weight (lb): "))
@@ -43,7 +45,8 @@ while True:
                 inch = int(input("Enter your Height (Inch): "))
                 heightinInch= (feet * 12) + inch
                 bmi = (lb / (heightinInch ** 2)) * 703
-                print(f"Body Mass Index: {bmi}")
+                rounded_bmi = round(bmi, 2)
+                print(f"Body Mass Index: {rounded_bmi}")
                 print(f"BMI Weight Class: {weightClass(bmi)}")
             case 4:
                 print("Thank your for using this program!")
