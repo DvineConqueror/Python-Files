@@ -13,11 +13,19 @@ def menu():
 def run_program():
     while True:
         menu()
-        milk_tea = input("Main: ")
-        milk_tea_add = input("Add-on: ")
+        choices = {'wintermelon': 70, 'chocolate': 50, 'strawberry': 60}
+        addons = {'pearl': 5, 'nata': 10, '': 0}
+        milk_tea = input("Main: ").lower()
+        if milk_tea not in choices:
+            print("Invalid Selection! Please try again.")
+            continue
         
-        prices = {'wintermelon': 70, 'chocolate': 50, 'strawberry': 60, 'pearl': 5, 'nata': 10, '': 0}
-        total = prices[milk_tea] + prices[milk_tea_add]
+        milk_tea_add = input("Add-on: ").lower()
+        if milk_tea_add not in addons:
+            print("Invalid Selection! Please try again.")
+            continue
+        
+        total = choices[milk_tea] + addons[milk_tea_add]
         print(f"Your total is: ₱{total}")
         pay = int(input("Your money is: ₱"))
         balance = pay - total
