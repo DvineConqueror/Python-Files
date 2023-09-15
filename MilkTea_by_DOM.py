@@ -32,8 +32,9 @@ def run_program():
         if pay < total:
             print("Sorry, you do not have enough balance for the transaction.")
         elif pay >= total:
-            print(f"You ordered: {milk_tea} with an add-on of {milk_tea_add}")
-            print(f"Your balance is: {balance}")
+            print (f"User Choice: {milk_tea}")
+            print (f"Add ons: {milk_tea_add}")
+            print(f"Your balance is: ₱{balance}")
          
         choice = input("Do you want to continue(Yes or No): ")
         if choice.lower() != "yes":
