@@ -21,7 +21,7 @@ while True:
             print("Higher")
             print(f"Guesses left: {guesses}")
         elif user_input == number:
-            print(f"Correct! The number is: {number}")
+            print(f"Correct! The number is: {number} and your guesses left is: {guesses}")
             
     choice = input("Do you want to continue(Yes or No): ")
     if choice.lower() != "yes":
