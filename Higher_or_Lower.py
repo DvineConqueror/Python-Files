@@ -8,13 +8,18 @@ while True:
     number_range = int(input("Enter number's range: "))
     number = random.randint(1, number_range)
     user_input = 0
+    guesses = 5
     
-    while user_input != number:
+    while user_input != number and guesses > 0:
         user_input = int(input("Guess the number: "))
         if user_input > number:
+            guesses = guesses - 1
             print("Lower")
+            print(f"Guesses left: {guesses}")
         elif user_input < number:
+            guesses = guesses - 1
             print("Higher")
+            print(f"Guesses left: {guesses}")
         elif user_input == number:
             print(f"Correct! The number is: {number}")
             
