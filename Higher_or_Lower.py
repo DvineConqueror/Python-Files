@@ -17,34 +17,40 @@ def player_register():
         main_game()
 
 def main_game():
+    
     high_score = 0
+    
     while True:
         number_range = int(input("Enter number's range: "))
         number = random.randint(1, number_range)
         user_input = 0
         max_guesses = 5
-        guesses = max_guesses  # Initialize guesses to max_guesses for each round
+        guesses = max_guesses
 
         while user_input != number and guesses > 0:
             user_input = int(input("Guess the number: "))
             if user_input > number:
-                guesses -= 1  # Use the shorthand to decrement guesses
+                guesses -= 1
                 print("Lower")
                 print(f"Guesses left: {guesses}")
             elif user_input < number:
-                guesses -= 1  # Use the shorthand to decrement guesses
+                guesses -= 1
                 print("Higher")
                 print(f"Guesses left: {guesses}")
             elif user_input == number:
-                points = (max_guesses - guesses) + 1
-                points = points * 100
+                if guesses == max_guesses - 1:
+                    points = 900
+                else:
+                    points = 900 - (max_guesses - guesses - 1) * 100
                 print("You WON!")
                 print(f"Correct! The number is: {number} and your guesses left is: {guesses}")
+                print(f"Player: {player_register}")
                 print(f"You scored {points} points!")
 
                 if points > high_score:
                     high_score = points
 
+                print(f"Player: {player_register}")
                 print(f"Your High Score is: {high_score}")
                 
         choice = input("Do you want to continue(Yes or No): ")
