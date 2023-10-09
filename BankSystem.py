@@ -1,5 +1,6 @@
 import os #imported for the terminal screen clearing
 import time #to add delay and effect
+import pwinput #for secure password
 
 def create_account():
     os.system("cls")
@@ -8,8 +9,8 @@ def create_account():
     global userName
     global password
     userName = input("Enter your username: ")
-    password = input("Enter your password: ")
-    print("Account: ", userName, "has been created!")
+    password = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
+    print(f"Account: {userName} has been created!")
     print("======================")
     time.sleep(2) #2 seconds of delay
     login_account()
@@ -21,7 +22,7 @@ def login_account():
         print("DOMINIC BANKING SYSTEM")
         print("Login Account")
         userName_true = input("Enter your username: ")
-        password_true = input("Enter your password: ")
+        password_true = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
         print("======================")
         if userName != userName_true or password != password_true:
             print("Invalid username. Try again!")
