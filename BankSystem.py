@@ -11,7 +11,6 @@ def create_account():
     userName = input("Enter your username: ")
     password = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
     print(f"Account: {userName} has been created!")
-    print("======================")
     time.sleep(2) #2 seconds of delay
     login_account()
     
@@ -23,7 +22,6 @@ def login_account():
         print("Login Account")
         userName_true = input("Enter your username: ")
         password_true = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
-        print("======================")
         if userName != userName_true or password != password_true:
             print("Invalid username. Try again!")
             time.sleep(1.5)
@@ -31,8 +29,6 @@ def login_account():
             logged_in = True
             bank_system()
             
-            
-      
 account_balance = 0 #Defined Account Balance outside
   
 def bank_system():
@@ -80,16 +76,32 @@ def bank_system():
                 return True   
     
 def login():
-    print("DOMINIC BANKING SYSTEM")
-    print("1) Create Account")
-    choice = int(input("Enter your choice: "))
-    if choice == 1:
-        create_account()
-    else:
-        print("Invalid")
-    print("======================")
+    while True:
+        os.system("cls")
+        print("DOMINIC BANKING SYSTEM")
+        print("Would you like create an account?")
+        choice = input("Enter your choice: ")
+        match choice.lower():
+            case 'yes':
+                print("Creating account in a few seconds...")
+                time.sleep(1.5)
+                create_account()
+                break
+            case 'no':
+                print("You can't proceed without an account.")
+                while True:
+                    choice_check = input("Would you like to exit the application: ").lower()
+                    if choice_check == 'yes':
+                        print("Exiting the program...")
+                        time.sleep(1.5)
+                        return #to exit the function instead of going back to the while statement
+                    elif choice_check == 'no':
+                        print("Going back to main page...")
+                        time.sleep(1.5)
+                        break
+            case _:
+                print("Invalid Choice")
     
-
         
 login()
         
