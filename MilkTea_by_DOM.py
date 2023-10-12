@@ -14,7 +14,7 @@ def run_program():
     while True:
         menu()
         choices = {'wintermelon': 70, 'chocolate': 50, 'strawberry': 60}
-        addons = {'pearl': 5, 'nata': 10, 'none': 10, '': 0}
+        addons = {'pearl': 5, 'nata': 10, 'none': 0, '': 0}
         milk_tea = input("Main: ").lower()
         if milk_tea not in choices:
             print("Invalid Selection! Please try again.")

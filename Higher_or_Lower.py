@@ -44,13 +44,11 @@ def main_game():
                     points = 900 - (max_guesses - guesses - 1) * 100
                 print("You WON!")
                 print(f"Correct! The number is: {number} and your guesses left is: {guesses}")
-                print(f"Player: {player_register}")
                 print(f"You scored {points} points!")
 
                 if points > high_score:
                     high_score = points
 
-                print(f"Player: {player_register}")
                 print(f"Your High Score is: {high_score}")
                 
         choice = input("Do you want to continue(Yes or No): ")
