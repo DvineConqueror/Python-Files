@@ -53,6 +53,7 @@ def create_account():
     password = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
     time.sleep(1.5)
     print(f"Account: {userName} has been created!")
+    print("proceeding to your account")
     print("********** Doynamic Finance **********")
     time.sleep(2) #2 seconds of delay
     login_account()
@@ -116,36 +117,45 @@ def bank_system():
                     os.system("cls")
             case "2":
                 withdraw = int(input("Enter how much you want to withdraw: "))
-                if withdraw <= account_balance:
-                    if password_attempt == password:
-                        account_balance -= withdraw
-                        time.sleep(1.5)
-                        print("Withdrawn amount is: ", withdraw)
-                        print("Going back to Menu...")
-                        time.sleep(1.5)
-                        os.system("cls")
+                if withdraw > 0:
+                    if withdraw <= account_balance:
+                        if password_attempt == password:
+                            account_balance -= withdraw
+                            time.sleep(1.5)
+                            print("Withdrawn amount is: ", withdraw)
+                            print("Going back to Menu...")
+                            time.sleep(1.5)
+                            os.system("cls")
+                        else:
+                            print("Entered password is wrong.")
+                            print("Terminating Operation")
+                            print("Have a nice day!")
+                            print("********** Doynamic Finance **********")
+                            time.sleep(1.2)
+                            break
                     else:
-                        print("Entered password is wrong.")
-                        print("Terminating Operation")
-                        print("Have a nice day!")
-                        print("********** Doynamic Finance **********")
-                        time.sleep(1.2)
-                        break
+                        print("Insufficient Funds!")
+                        retry = input("Would you like to continue? yes/no: ")
+                        if retry.lower() != 'yes':
+                            print("Program exiting...")
+                            time.sleep(1.5)
+                            print("Have a nice day!")
+                            print("********** Doynamic Finance **********")
+                            break
+                        else:
+                            print("Going back to menu...")
+                            time.sleep(0.9)
+                            os.system("cls")
+                            continue
                 else:
-                    print("Insufficient Funds!")
-                    retry = input("Would you like to continue? yes/no: ")
-                    if retry.lower() != 'yes':
-                        print("Program exiting...")
-                        time.sleep(1.5)
-                        print("Have a nice day!")
-                        print("********** Doynamic Finance **********")
-                        break
-                    else:
-                        os.system("cls")
-                        continue
+                    print("Invalid amount to withdraw. Please enter a positive amount.")
+                    print("Going back to Menu...")
+                    time.sleep(1.5)
+                    os.system("cls")
             case "3":
                 if password_attempt == password:
                     print("Bank System exiting...")
+                    time.sleep(0.5)
                     print("********** Doynamic Finance **********")
                     time.sleep(0.9)
                     return True
@@ -153,6 +163,12 @@ def bank_system():
                         print("Entered password is wrong.")
                         time.sleep(1.5)
                         os.system("cls")
+            case _:
+                print("Invalid Choice")
+                print("********** Doynamic Finance **********")
+                time.sleep(1)
+                os.system("cls")
+                
         
 login()
         
