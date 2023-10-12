@@ -2,15 +2,58 @@ import os #imported for the terminal screen clearing
 import time #to add delay and effect
 import pwinput #for secure password
 
+def login():
+    while True:
+        os.system("cls")
+        print("********** Doynamic Finance **********")
+        print("Would you like create an account?")
+        print("1. Yes")
+        print("2. No")
+        choice = input("Enter your choice: ")#these are in string, they should accept a string instead of int
+        match choice:
+            case "1":
+                print("Creating account in a few seconds...")
+                print("********** Doynamic Finance **********")
+                time.sleep(1.5)
+                create_account()
+                break
+            case "2":
+                print("You can't proceed without an account.")
+                print("Would you like to exit the program?")
+                print("1. Yes")
+                print("2. No")
+                while True:
+                    choice_check = input("Input your choice: ")
+                    if choice_check == "1":
+                        print("Exiting the program...")
+                        print("********** Doynamic Finance **********")
+                        time.sleep(1.5)
+                        return #to exit the function instead of going back to the while statement
+                    elif choice_check == "2":
+                        print("Going back to main page...")
+                        print("********** Doynamic Finance **********")
+                        time.sleep(1.5)
+                        break
+                    else:
+                        print("Invalid")
+                        print("********** Doynamic Finance **********")
+                        time.sleep(1)
+            case _:
+                print("Invalid Choice")
+                print("********** Doynamic Finance **********")
+                time.sleep(1)
+
 def create_account():
     os.system("cls")
-    print("DOMINIC BANKING SYSTEM")
-    print("Creating Account")
+    print("********** Doynamic Finance **********")
+    print("-------- Creating an account --------")
     global userName
     global password
     userName = input("Enter your username: ")
     password = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
+    time.sleep(1.5)
     print(f"Account: {userName} has been created!")
+    print("********** Doynamic Finance **********")
     time.sleep(2) #2 seconds of delay
     login_account()
     
@@ -18,8 +61,8 @@ def login_account():
     logged_in = False
     while not logged_in:
         os.system("cls")
-        print("DOMINIC BANKING SYSTEM")
-        print("Login Account")
+        print("********** Doynamic Finance **********")
+        print("----------- Login Account ----------")
         userName_true = input("Enter your username: ")
         password_true = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
         if userName != userName_true or password != password_true:
@@ -27,39 +70,65 @@ def login_account():
             time.sleep(1.5)
         else:
             logged_in = True
+            time.sleep(1.5)
+            print("Account logged in, proceeding to your account")
+            print("********** Doynamic Finance **********")
+            time.sleep(1.2)
+            os.system("cls")
             bank_system()
             
 account_balance = 0 #Defined Account Balance outside
-  
+
 def bank_system():
     
     global account_balance #declare account balance to global to continuously update when the program checks balance
     
     while True:
-        print("DOMINIC BANKING SYSTEM")
-        print("Welcome!", userName)
-        print("Menu")
-        print("Balance:", account_balance)
-        print("[1]Deposit [2]Withdraw [3]Exit")
+        print("********** Doynamic Finance **********")
+        print(f"---------- Welcome! {userName} ----------")
+        print(f"============== Balance: {account_balance} =============")
+        print("+++|[1]Deposit [2]Withdraw [3]Exit|+++")
         choice = int(input("Enter your choice: "))
+        
+        password_attempt = pwinput.pwinput(prompt='Enter your password to continue: ', mask='*')
+    
         match choice:
             case 1:
                 deposit = int(input("Enter how much you want to deposit: "))
                 if deposit > 0:
-                    account_balance += deposit
-                    print("You have successfully deposited:", deposit)
-                    time.sleep(2)
-                    os.system("cls")
+                    if password_attempt == password:
+                        account_balance += deposit
+                        time.sleep(1.5)
+                        print("You have successfully deposited:", deposit)
+                        time.sleep(1.5)
+                        os.system("cls")
+                    else:
+                        print("Entered password is wrong.")
+                        print("Terminating Operation")
+                        print("Have a nice day!")
+                        print("********** Doynamic Finance **********")
+                        time.sleep(1.2)
+                        break
                 else:
                     print("Invalid amount to deposit")
+                    time.sleep(1.2)
                     os.system("cls")
             case 2:
                 withdraw = int(input("Enter how much you want to withdraw: "))
                 if withdraw <= account_balance:
-                    account_balance -= withdraw
-                    print("Withdrawn amount is: ", withdraw)
-                    time.sleep(2)
-                    os.system("cls")
+                    if password_attempt == password:
+                        account_balance -= withdraw
+                        time.sleep()
+                        print("Withdrawn amount is: ", withdraw)
+                        time.sleep(1.5)
+                        os.system("cls")
+                    else:
+                        print("Entered password is wrong.")
+                        print("Terminating Operation")
+                        print("Have a nice day!")
+                        print("********** Doynamic Finance **********")
+                        time.sleep(1.2)
+                        break
                 else:
                     print("Insufficient Funds!")
                     retry = input("Would you like to continue? yes/no: ")
@@ -73,34 +142,10 @@ def bank_system():
                         continue
             case 3:
                 print("Bank System exiting...")
+                print("********** Doynamic Finance **********")
+                time.sleep(0.9)
                 return True   
     
-def login():
-    while True:
-        os.system("cls")
-        print("DOMINIC BANKING SYSTEM")
-        print("Would you like create an account?")
-        choice = input("Enter your choice: ")
-        match choice.lower():
-            case 'yes':
-                print("Creating account in a few seconds...")
-                time.sleep(1.5)
-                create_account()
-                break
-            case 'no':
-                print("You can't proceed without an account.")
-                while True:
-                    choice_check = input("Would you like to exit the application: ").lower()
-                    if choice_check == 'yes':
-                        print("Exiting the program...")
-                        time.sleep(1.5)
-                        return #to exit the function instead of going back to the while statement
-                    elif choice_check == 'no':
-                        print("Going back to main page...")
-                        time.sleep(1.5)
-                        break
-            case _:
-                print("Invalid Choice")
     
         
 login()
