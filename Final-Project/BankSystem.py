@@ -1,8 +1,10 @@
-import os #imported for the terminal screen clearing
-import time #to add delay and effect
-import pwinput #for secure password
-import sys #for exiting
+import os #Imported for the terminal screen clearing
+import time #To add delay and effect
+import pwinput #For secure password
+import sys #For exiting
+import re #For Password Checking Pattern
 
+#Function to handle integer inputs to check if they are valid 
 def number_inputs(prompt):
     while True:
         try:
@@ -14,17 +16,21 @@ def number_inputs(prompt):
             clear_screen()
             bank_header()
 
+#Function to clear screen/terminal
 def clear_screen():
     os.system("cls")
     
+#Function to display the header text    
 def bank_header():
     print("********** Doynamic Finance **********")
-    
+   
+#Function to display the main menu of the program   
 def main_menu():
-    print(f" ---------- Welcome! {userName} ----------")
+    print(f" ---------- Welcome! {accountName} ----------")
     print(f"   =========== Balance: {account_balance} ==========")
     print("    |[1]Deposit [2]Withdraw [3]Exit|    ")
 
+#Function to handle the login process
 def login():
     while True:
         clear_screen()
@@ -66,29 +72,67 @@ def login():
                 bank_header()
                 time.sleep(1)
 
+#Function to handle the creation of account process
 def create_account():
-    clear_screen()
-    bank_header()
-    print("-------- Creating an account --------")
-    global userName
-    global password
-    userName = input("Enter your username: ")
-    password = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
-    time.sleep(1.5)
-    print(f"Account: {userName} has been created!")
-    print("proceeding to your account")
-    bank_header()
-    time.sleep(2) #2 seconds of delay
-    login_account()
+    while True:
+        clear_screen()
+        bank_header()
+        print("-------- Creating an account --------")
+        print("Note: \n Password should be within 8 characters. \n It should contain ")
+        
+        #Collecting account information
+        global userName
+        global password
+        global accountName
+        accountFName = input("Enter your First Name: ")
+        accountLName = input("Enter your Last Name: ")
+        accountName = accountFName, accountLName
+        personAge = number_inputs("Enter your Age: ")
+        
+        #Checking age eligibility
+        if personAge < 18:
+            print("Minimum Age of Account Holder is 18.")
+            exit_system()
+        elif personAge >= 18 and personAge < 122:
+            userName = input("\nEnter your Username: ")
+            while True:
+                print("Note: \n Password should be within 8 characters. \n It should contain ")
+                password = pwinput.pwinput(prompt='Enter your Password: ', mask='*')#to mask password
+                if validate_password(password):
+                    time.sleep(1.5)
+                    print(f"Account: {accountName} has been created!")
+                    print("proceeding to your account")
+                    bank_header()
+                    time.sleep(2)
+                    login_account()
+                else:
+                    print("Invalid Password. \nPassword should contain at least one letter and one digit,\nand be at least 8 characters long.")
+                    time.sleep(1)
+        else:
+            print("Invalid Age.")
+            time.sleep(1)
     
+#For password validation    
+def validate_password(password):  
+    if len(password) < 8:  
+        return False  
+    if not re.search("[a-z]", password):  
+        return False  
+    if not re.search("[A-Z]", password):  
+        return False  
+    if not re.search("[0-9]", password):  
+        return False  
+    return True      
+    
+#Function to handle the login authentication of account
 def login_account():
     logged_in = False
     while not logged_in:
         clear_screen()
         bank_header()
         print("----------- Login Account ----------")
-        userName_true = input("Enter your username: ")
-        password_true = pwinput.pwinput(prompt='Enter your password: ', mask='*')#to mask password
+        userName_true = input("Enter your Username: ")
+        password_true = pwinput.pwinput(prompt='Enter your Password: ', mask='*')#to mask password
         if userName != userName_true or password != password_true:
             print("Invalid username. Try again!")
             time.sleep(1.5)
@@ -101,8 +145,10 @@ def login_account():
             clear_screen()
             bank_system()
             
-account_balance = 0 #Defined Account Balance outside for balance checking
+#Defined Account Balance outside for balance checking
+account_balance = 0 
 
+#Function to handle the deposit process
 def deposit():
     global account_balance
     password_attempt = pwinput.pwinput(prompt='Enter your password to continue: ', mask='*')
@@ -124,7 +170,7 @@ def deposit():
         print("Entered password is wrong.")
         exit_system()
 
-        
+#Function to handle the withdrawal process        
 def withdraw():
     global account_balance
     password_attempt = pwinput.pwinput(prompt='Enter your password to continue: ', mask='*')
@@ -161,11 +207,9 @@ def exit_system():
     time.sleep(1.2)
     bank_header()
     time.sleep(0.5)
-    try:
-        sys.exit(0)
-    except SystemExit:
-        pass
-        
+    sys.exit(0)
+
+#Function to handle the main banking system        
 def bank_system():
     while True:
         bank_header()
@@ -181,17 +225,20 @@ def bank_system():
                 if password_attempt == password:
                     print("System Exiting...")
                     time.sleep(1)
-                    exit_system()
+                    return False
                 else:
                     print("Entered password is wrong.")
-                    exit_system()
+                    time.sleep(0.5)
+                    print("System Exiting...")
+                    time.sleep(1)
+                    return False
             case _:
                 print("Invalid Choice")
                 bank_header()
                 time.sleep(1)
                 clear_screen()
                 
-        
+#Initiating login process        
 login()
         
     
