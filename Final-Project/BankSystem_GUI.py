@@ -1,8 +1,10 @@
 import customtkinter
+import os
+from PIL import Image
 from tkinter import messagebox
 from tkinter import Toplevel
 
-customtkinter.set_appearance_mode("dark")
+customtkinter.set_appearance_mode("black")
 customtkinter.set_default_color_theme("green")
 
 def main_menu():
@@ -23,11 +25,12 @@ def validate_password(password):
 
 def create_account_section():
     create_window = Toplevel(root)
-    create_window.geometry("500x300")
+    create_window.geometry("400x260")
     create_window.title("Create Account")
+    root.withdraw()
 
     frame_create = customtkinter.CTkFrame(master=create_window)
-    frame_create.pack(pady=20, padx=60, fill="both", expand=False)
+    frame_create.pack(pady=30, padx=30, fill="both", expand=False)
 
     label_create = customtkinter.CTkLabel(master=frame_create, text="Create an account", font=("Times", 20))
     label_create.pack(pady=12, padx=10)
@@ -39,13 +42,15 @@ def create_account_section():
     password_create.pack(pady=12, padx=10)
 
     def create_account():
-        entered_username = username_create.get()
-        entered_password = password_create.get()
+        global created_username
+        global created_password
+        created_username = username_create.get()
+        created_password = password_create.get()
 
-        if validate_password(entered_password):
+        if validate_password(created_password):
             messagebox.showinfo("Account Created", "Account created successfully!")
+            login_account_section()
             create_window.destroy()  # Close the create window
-            login_account_section
         else:
             messagebox.showerror("Invalid Password", "Password does not meet the criteria.")
 
@@ -54,12 +59,14 @@ def create_account_section():
     create_window.bind("<Return>", lambda event=None: create_account())
 
 def login_account_section():
+    customtkinter.set_appearance_mode("dark")
+    customtkinter.set_default_color_theme("green")
     login_window = Toplevel(root)
-    login_window.geometry("500x300")
+    login_window.geometry("400x260")
     login_window.title("Login")
 
     frame_login = customtkinter.CTkFrame(master=login_window)
-    frame_login.pack(pady=20, padx=60, fill="both", expand=False)
+    frame_login.pack(pady=30, padx=30, fill="both", expand=False)
 
     label_login = customtkinter.CTkLabel(master=frame_login, text="Login", font=("Times", 20))
     label_login.pack(pady=12, padx=10)
@@ -74,7 +81,7 @@ def login_account_section():
         entered_username = username_login.get()
         entered_password = password_login.get()
 
-        if username_login == entered_username and password_login == entered_password:
+        if created_username == entered_username and created_password == entered_password:
             messagebox.showinfo("Login Successful", "Welcome to the Doynamic Bank!")
             login_window.destroy()  # Close the login window
             main_menu()
@@ -88,20 +95,21 @@ def login_account_section():
     login_window.bind("<Return>", lambda event=None: login_attempt())
 
 root = customtkinter.CTk()
-root.geometry("500x280")
-root.title("Doynamic Bank System")
+root.geometry("400x260")
+root.title("Welcome to Doynamic Bank!")
 
 frame = customtkinter.CTkFrame(master=root)
-frame.pack(pady=20, padx=60, expand=False)
+frame.pack(pady=30, padx=30, expand=True)
 
-label = customtkinter.CTkLabel(master=frame, text="Doynamic Bank System", font=("Times", 32))
-label.pack(pady=12, padx=10)
+label = customtkinter.CTkLabel(master=frame, text="Doynamic Bank", font=("Times", 42))
+label.pack(pady=12, padx=30)
+
+
+label = customtkinter.CTkLabel(master=frame, text="Would you like to", font=("Times", 20))
+label.pack(pady=5, padx=30)
 
 # Create Account Section
-label_create = customtkinter.CTkLabel(master=frame, text="Welcome to Doynamic Bank!", font=("Times", 20))
-label_create.pack(pady=12, padx=10)
-
-create_button = customtkinter.CTkButton(master=frame, border_color="red", text="Create Account", command=create_account_section, font=("Times", 14))
+create_button = customtkinter.CTkButton(master=frame, border_color="red", text="Create Account", command=lambda:create_account_section(), font=("Times", 20))
 create_button.pack(pady=12, padx=10)
 
 root.mainloop()
