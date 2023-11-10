@@ -4,12 +4,37 @@ from PIL import ImageTk
 from tkinter import messagebox
 from tkinter import Toplevel
 
+#Global Variables
+attempts = 0  # Move the attempts variable outside the function
+balance = 0
+
 customtkinter.set_appearance_mode("black")
 customtkinter.set_default_color_theme("green")
 
 def main_menu():
+    global balance
     main_menu_window = customtkinter.CTk()
-    main_menu_window.geometry("600x400")
+    main_menu_window.geometry("400x300")
+    
+    frame_create = customtkinter.CTkFrame(master=main_menu_window)
+    frame_create.pack_propagate(False)
+    frame_create.pack(pady=0, padx=0, fill="both", expand=True)
+
+    label_create = customtkinter.CTkLabel(master=frame_create, text="Doynamic Bank", font=("Constantia", 32), text_color="#1DDEA8")
+    label_create.pack(pady=(5, 0), padx=10)
+    
+    label_create = customtkinter.CTkLabel(master=frame_create, text=f"Balance = {balance}", font=("Constantia", 24))
+    label_create.pack(pady=(15, 0), padx=10)
+    
+    deposit_button = customtkinter.CTkButton(master=frame_create, border_color="red", text="Deposit", command=lambda:exit_system(), font=("Constantia", 20), width=180, height=35)
+    deposit_button.pack(pady=(15, 0), padx=10)
+    
+    withdraw_button = customtkinter.CTkButton(master=frame_create, border_color="red", text="Withdraw", command=lambda:exit_system(), font=("Constantia", 20), width=180, height=35)
+    withdraw_button.pack(pady=(15, 0), padx=10)
+    
+    exit_button = customtkinter.CTkButton(master=frame_create, border_color="red", text="Exit", command=lambda:exit_system(), font=("Constantia", 20), width=160, height=25)
+    exit_button.pack(pady=15, padx=10)
+    
     main_menu_window.mainloop()
     
 def exit_system():
@@ -32,26 +57,25 @@ def create_account_section():
     create_window.geometry("400x300")
     create_window.resizable(0,0)
     create_window.title("Create Account")
-    sv = customtkinter.StringVar()
     root.withdraw()
 
     frame_create = customtkinter.CTkFrame(master=create_window)
     frame_create.pack_propagate(False)
     frame_create.pack(pady=0, padx=0, fill="both", expand=True)
 
-    label_create = customtkinter.CTkLabel(master=frame_create, text="Create an account", font=("Times", 32), text_color="#1DDEA8")
+    label_create = customtkinter.CTkLabel(master=frame_create, text="Create an account", font=("Constantia", 32), text_color="#1DDEA8")
     label_create.pack(pady=(5, 0), padx=10)
     
-    note = customtkinter.CTkLabel(master=frame_create, text="Password should contain:", text_color="#DA5D74",font=("Times", 20))
+    note = customtkinter.CTkLabel(master=frame_create, text="Password should contain:", text_color="#DA5D74",font=("Constantia", 20))
     note.pack(pady=(0, 0))
     
-    label_remind = customtkinter.CTkLabel(master=frame_create, text="\nMinimum of 8 Characters, One Uppercase Letter\nOne Numeric Value",font=("Times", 14))
+    label_remind = customtkinter.CTkLabel(master=frame_create, text="\nMinimum of 8 Characters, One Uppercase Letter\nOne Numeric Value",font=("Constantia", 14))
     label_remind.pack(pady=(0, 0))
 
-    username_create = customtkinter.CTkEntry(master=frame_create, placeholder_text="Username", font=("Times", 18), width=200)
+    username_create = customtkinter.CTkEntry(master=frame_create, placeholder_text="Username", font=("Arial", 18), width=200)
     username_create.pack(pady=(12, 0), padx=10)
 
-    password_create = customtkinter.CTkEntry(master=frame_create, placeholder_text="Password", show="*", font=("Times", 18), width=200)
+    password_create = customtkinter.CTkEntry(master=frame_create, placeholder_text="Password", show="*", font=("Arial", 18), width=200)
     password_create.pack(pady=(22, 0), padx=10)
 
     def toggle_password():
@@ -60,9 +84,6 @@ def create_account_section():
             password_create.configure(show='*')
         else:
             password_create.configure(show='')
-    
-    checkbox = customtkinter.CTkCheckBox(master=frame_create, text="Show password", command=toggle_password, onvalue="on", offvalue="off")
-    checkbox.pack(padx=0, pady=10)
 
     def create_account():
         global created_username
@@ -77,11 +98,12 @@ def create_account_section():
         else:
             messagebox.showerror("Invalid Password", "Password does not meet the criteria.")
 
-    create_button = customtkinter.CTkButton(master=frame_create, border_color="red", text="Create Account", command=create_account, font=("Times", 20))
+    checkbox = customtkinter.CTkCheckBox(master=frame_create, text="Show password", command=toggle_password, onvalue="on", offvalue="off")
+    checkbox.pack(padx=0, pady=10)
+
+    create_button = customtkinter.CTkButton(master=frame_create, border_color="red", text="Create Account", command=create_account, font=("Constantia", 20))
     create_button.pack(pady=(2, 0), padx=10)
     create_window.bind("<Return>", lambda event=None: create_account())
-
-attempts = 0  # Move the attempts variable outside the function
 
 def login_account_section():
     login_window = Toplevel(root)
@@ -92,13 +114,13 @@ def login_account_section():
     frame_login = customtkinter.CTkFrame(master=login_window)
     frame_login.pack(pady=0, padx=0, fill="both", expand=True)
 
-    label_login = customtkinter.CTkLabel(master=frame_login, text="Login", font=("Times", 32))
+    label_login = customtkinter.CTkLabel(master=frame_login, text="Login", font=("Constantia", 32))
     label_login.pack(pady=12, padx=10)
 
-    username_login = customtkinter.CTkEntry(master=frame_login, placeholder_text="Username", font=("Times", 18), width=200)
+    username_login = customtkinter.CTkEntry(master=frame_login, placeholder_text="Username", font=("Constantia", 18), width=200)
     username_login.pack(pady=12, padx=10)
 
-    password_login = customtkinter.CTkEntry(master=frame_login, placeholder_text="Password", show="*", font=("Times", 18), width=205)
+    password_login = customtkinter.CTkEntry(master=frame_login, placeholder_text="Password", show="*", font=("Constantia", 18), width=205)
     password_login.pack(pady=12, padx=10)
 
     def login_attempt():
@@ -129,12 +151,12 @@ def login_account_section():
                 exit_system()
             messagebox.showerror("Login Failed", "Please check your credentials.")
 
-    login_button = customtkinter.CTkButton(master=frame_login, border_color="#000000", text="Login", command=login_attempt, font=("Times", 14), width=200)
+    login_button = customtkinter.CTkButton(master=frame_login, border_color="#000000", text="Login", command=login_attempt, font=("Constantia", 14), width=200)
     login_button.pack(pady=12, padx=10)
     login_window.bind("<Return>", lambda event=None: login_attempt())
 
 root = customtkinter.CTk()
-root.geometry("400x260")
+root.geometry("400x300")
 root.resizable(0,0)
 root.title("Welcome to Doynamic Bank!")
 root.iconpath = ImageTk.PhotoImage(file=os.path.join("Final-Project","BankLogo.png"))
@@ -147,17 +169,17 @@ left_frame.pack(padx=0, pady=0, side="left", fill="y", expand=True)
 frame = customtkinter.CTkFrame(master=root)
 frame.pack(pady=0, padx=0,side="left", fill="both", expand=True)
 
-label = customtkinter.CTkLabel(master=frame, text="Doynamic Bank", font=("Times", 38))
-label.pack(pady=12, padx=30)
+label = customtkinter.CTkLabel(master=frame, text="Doynamic \nBank", font=("Constantia", 50))
+label.pack(pady=5, padx=25)
 
 
-label = customtkinter.CTkLabel(master=frame, text="Would you like to", font=("Times", 20))
+label = customtkinter.CTkLabel(master=frame, text="Would you like to", font=("Constantia", 20))
 label.pack(pady=5, padx=30)
 
-create_button = customtkinter.CTkButton(master=frame, fg_color="#21866A", text="Create Account", command=lambda:create_account_section(), font=("Times", 20), width=180, height=40)
+create_button = customtkinter.CTkButton(master=frame, fg_color="#21866A", text="Create Account", command=lambda:create_account_section(), font=("Constantia", 20), width=180, height=40)
 create_button.pack(pady=12, padx=10)
 
-exit_button = customtkinter.CTkButton(master=frame, border_color="red", text="Exit", command=lambda:exit_system(), font=("Times", 20), width=180, height=35)
+exit_button = customtkinter.CTkButton(master=frame, border_color="red", text="Exit", command=lambda:exit_system(), font=("Constantia", 20), width=180, height=35)
 exit_button.pack(pady=12, padx=10)
 
 root.mainloop()
